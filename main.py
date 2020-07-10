@@ -14,6 +14,18 @@ try:
 except OSError:
     print('Error: Creating directory of data')
 
+try:
+
+    # creating a folder named data
+    if not os.path.exists('data_key'):
+        os.makedirs('data_key')
+
+    # if not created then raise error
+except OSError:
+    print('Error: Creating directory of data')
+
+
+
 # frame
 currentframe = 0
 
@@ -79,8 +91,13 @@ while (True):
             print('HASH: difference between current frame and previous frame: ')
             print(Hash_subtraction)
             #The most optimal image hash algorithm is wavelet_hash, according to observation of hash's output
+            #Get keyframes in a folder
             if (wavelet_Hash_curr - wavelet_Hash_prev) > 11:
                 print('key frame is:' + str(currentframe))
+                name_key = './data_key/frame' + str(currentframe) + '.jpg'
+                print('Creating...' + name_key)
+                # writing the extracted images
+                cv2.imwrite(name_key, frame)
         currentframe += 1
         print('#-------------------------------------#')
     else:

@@ -104,9 +104,9 @@ while (True):
             print('HASH: difference between current frame and previous frame: ')
             print(Hash_subtraction)
             print('\n')
-            #The most optimal image hash algorithm is wavelet_hash, according to observation of hash's output
+
             #Get keyframes in a folder
-            if (wavelet_Hash_curr - wavelet_Hash_prev) >= 25:
+            if (diffHash_curr - diffHash_prev) >= 29:
                 print('key frame is:' + str(currentframe))
                 name_key = './data_key/frame' + str(currentframe) + '.jpg'
                 print('Creating...' + name_key)

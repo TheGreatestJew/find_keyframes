@@ -5,12 +5,12 @@ from PIL import Image
 import time
 start_time = time.time()
 # Read the video from specified path
-cam = cv2.VideoCapture("D:\\pycharm_projects\\find_keyframes\\vid2.mp4")
+cam = cv2.VideoCapture("D:\\pycharm_projects\\find_keyframes\\vid.mp4")
 try:
 
     # creating a folder named data
-    if not os.path.exists('data'):
-        os.makedirs('data')
+    if not os.path.exists('data1'):
+        os.makedirs('data1')
 
     # if not created then raise error
 except OSError:
@@ -19,8 +19,8 @@ except OSError:
 try:
 
     # creating a folder named data
-    if not os.path.exists('data_key'):
-        os.makedirs('data_key')
+    if not os.path.exists('data_key1'):
+        os.makedirs('data_key1')
 
     # if not created then raise error
 except OSError:
@@ -40,7 +40,7 @@ while (True):
     if ret:
         # if video is still left continue creating images
         print('#-------------------------------------#')
-        name_curr = './data/frame' + str(currentframe) + '.jpg'
+        name_curr = './data1/frame' + str(currentframe) + '.jpg'
         print('Creating...' + name_curr)
 
         # writing the extracted images
@@ -80,7 +80,7 @@ while (True):
         print (currentframe_configs)
         if currentframe >= 1:
             prevframe = currentframe - 1
-            name_prev = './data/frame' + str(prevframe) + '.jpg'
+            name_prev = './data1/frame' + str(prevframe) + '.jpg'
             aver_Hash_prev = imagehash.average_hash(Image.open(name_prev))
             # perception hash
             percep_Hash_prev = imagehash.phash(Image.open(name_prev))
@@ -106,9 +106,9 @@ while (True):
             print('\n')
 
             #Get keyframes in a folder
-            if (diffHash_curr - diffHash_prev) >= 29:
+            if (wavelet_Hash_curr - wavelet_Hash_prev) >= 25:
                 print('key frame is:' + str(currentframe))
-                name_key = './data_key/frame' + str(currentframe) + '.jpg'
+                name_key = './data_key1/frame' + str(currentframe) + '.jpg'
                 print('Creating...' + name_key)
                 # writing the extracted images
                 cv2.imwrite(name_key, frame)

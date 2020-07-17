@@ -3,7 +3,7 @@ import os
 import imagehash
 from PIL import Image
 import time
-
+from matplotlib import pyplot as plt
 start_time = time.time()
 # Read the video from specified path
 cam = cv2.VideoCapture("D:\\pycharm_projects\\find_keyframes\\vid.mp4")
@@ -29,6 +29,10 @@ except OSError:
 
 # frame
 currentframe = 0
+wavelet_subtraction = '0'
+Hash_wavelet = []
+Hash_wavelet.append(wavelet_subtraction)
+counter_of_curr_frames = []
 time_of_oper = 0
 while (True):
 
@@ -68,6 +72,8 @@ while (True):
 
             # difference between current frame and previous one
             Hash_subtraction = str(wavelet_Hash_curr - wavelet_Hash_prev)
+            wavelet_subtraction = str(wavelet_Hash_curr - wavelet_Hash_prev)
+            Hash_wavelet.append(wavelet_subtraction)
 
             print('HASH: difference between current frame and previous frame: ')
             print(Hash_subtraction)
@@ -80,6 +86,7 @@ while (True):
                 print('Creating...' + name_key)
                 # writing the extracted images
                 cv2.imwrite(name_key, frame)
+        counter_of_curr_frames.append(currentframe)
         currentframe += 1
         print('#-------------------------------------#')
     else:
@@ -91,6 +98,11 @@ exec_time = (time.time() - start_time)
 print("--- %s seconds ---" % exec_time)
 average_time_per_oper = time_of_oper/fps_amount
 print("---average time per operation: %s seconds ---" % average_time_per_oper)
+plt.plot(counter_of_curr_frames, Hash_wavelet, label='wavelet Hash')
+plt.xlabel("Frames")
+plt.ylabel("Wavelet Hash substracted values")
+plt.legend()
+plt.show()
 # Release all space and windows once done
 cam.release()
 cv2.destroyAllWindows()

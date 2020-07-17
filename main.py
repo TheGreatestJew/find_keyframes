@@ -47,6 +47,12 @@ Hash_diff.append(diff_subtraction)
 Hash_wavelet.append(wavelet_subtraction)
 
 counter_of_curr_frames = []
+
+time_of_aver = 0
+time_of_perc = 0
+time_of_diff = 0
+time_of_wave = 0
+
 while (True):
 
     # reading from frame
@@ -65,25 +71,29 @@ while (True):
         aver_Hash_curr = imagehash.average_hash(Image.open(name_curr))
         time2 = time.time()
         print('average hash: ' + str(aver_Hash_curr))
-        print(" %s seconds " % (time2 - time1))
+        time_of_aver += (time2 - time1)
+        print(" %s seconds " % time_of_aver)
         #perception hash
         time3 = time.time()
         percep_Hash_curr = imagehash.phash(Image.open(name_curr))
         time4 = time.time()
         print('perception hash: ' + str(percep_Hash_curr))
-        print(" %s seconds " % (time4 - time3))
+        time_of_perc += (time4 - time3)
+        print(" %s seconds " % time_of_perc)
         # difference hashing
         time5 = time.time()
         diffHash_curr = imagehash.dhash(Image.open(name_curr))
         time6 = time.time()
         print('difference hash: ' + str(diffHash_curr))
-        print(" %s seconds " % (time6 - time5))
+        time_of_diff += (time6 - time5)
+        print(" %s seconds " % time_of_diff)
         #wavelet hashing
         time7= time.time()
         wavelet_Hash_curr = imagehash.whash(Image.open(name_curr))
         time8 = time.time()
         print('wavelet hash: ' + str(wavelet_Hash_curr))
-        print("%s seconds " % (time8 - time7))
+        time_of_wave += (time8 - time7)
+        print("%s seconds " % time_of_wave)
 
 
         #start to put current hashes in a list
@@ -144,8 +154,18 @@ while (True):
     else:
         break
 print(cam.get(cv2.CAP_PROP_FRAME_COUNT))
+fps_amount = cam.get(cv2.CAP_PROP_FRAME_COUNT)
 print(cam.get(cv2.CAP_PROP_FPS))
 print("--- %s seconds ---" % (time.time() - start_time))
+
+average_time_per_oper = time_of_aver/fps_amount
+print("---average time per operation: %s seconds ---" % average_time_per_oper)
+perc_time_per_oper = time_of_perc/fps_amount
+print("---perception time per operation: %s seconds ---" % perc_time_per_oper)
+diff_time_per_oper = time_of_diff/fps_amount
+print("---difference time per operation: %s seconds ---" % diff_time_per_oper)
+wave_time_per_oper = time_of_wave/fps_amount
+print("---wavelet time per operation: %s seconds ---" % wave_time_per_oper)
 
 plt.plot(counter_of_curr_frames, Hash_aver, label='average Hash')
 plt.plot(counter_of_curr_frames, Hash_perc, label='perception Hash')

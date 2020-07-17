@@ -29,7 +29,7 @@ except OSError:
 
 # frame
 currentframe = 0
-
+time_of_oper = 0
 while (True):
 
     # reading from frame
@@ -49,7 +49,8 @@ while (True):
         diffHash_curr = imagehash.dhash(Image.open(name_curr))
         time6 = time.time()
         print('difference hash: ' + str(diffHash_curr))
-        print(" %s seconds " % (time6 - time5))
+        time_of_oper += (time6 - time5)
+        print(" %s seconds " % time_of_oper)
 
         # start to put current hashes in a list
         currentframe_configs = str(diffHash_curr)
@@ -88,8 +89,8 @@ fps_amount = cam.get(cv2.CAP_PROP_FRAME_COUNT)
 print(cam.get(cv2.CAP_PROP_FPS))
 exec_time = (time.time() - start_time)
 print("--- %s seconds ---" % exec_time)
-average_time_per_oper = exec_time / fps_amount
-print("--- %s seconds ---" % average_time_per_oper)
+average_time_per_oper = time_of_oper/fps_amount
+print("---average time per operation: %s seconds ---" % average_time_per_oper)
 # Release all space and windows once done
 cam.release()
 cv2.destroyAllWindows()

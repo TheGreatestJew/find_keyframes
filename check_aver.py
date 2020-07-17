@@ -31,7 +31,7 @@ except OSError:
 # frame
 currentframe = 0
 
-
+time_of_oper = 0
 while (True):
 
     # reading from frame
@@ -50,7 +50,8 @@ while (True):
         aver_Hash_curr = imagehash.average_hash(Image.open(name_curr))
         time2 = time.time()
         print('average hash: ' + str(aver_Hash_curr))
-        print(" %s seconds " % (time2 - time1))
+        time_of_oper += (time2 - time1)
+        print(" %s seconds " % time_of_oper)
 
 
 
@@ -84,13 +85,14 @@ while (True):
         print('#-------------------------------------#')
     else:
         break
+
 print(cam.get(cv2.CAP_PROP_FRAME_COUNT))
 fps_amount = cam.get(cv2.CAP_PROP_FRAME_COUNT)
 print(cam.get(cv2.CAP_PROP_FPS))
 exec_time = (time.time() - start_time)
 print("--- %s seconds ---" % exec_time)
-average_time_per_oper = exec_time / fps_amount
-print("--- %s seconds ---" % average_time_per_oper)
+average_time_per_oper = time_of_oper/fps_amount
+print("---average time per operation: %s seconds ---" % average_time_per_oper)
 # Release all space and windows once done
 cam.release()
 cv2.destroyAllWindows()

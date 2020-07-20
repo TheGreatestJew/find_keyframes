@@ -1,5 +1,5 @@
-import cv2
 import os
+import cv2
 import imagehash
 from PIL import Image
 import time

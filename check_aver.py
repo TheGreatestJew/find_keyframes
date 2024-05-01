@@ -6,12 +6,12 @@ import time
 from matplotlib import pyplot as plt
 start_time = time.time()
 # Read the video from specified path
-cam = cv2.VideoCapture("D:\\pycharm_projects\\find_keyframes\\vid.mp4")
+cam = cv2.VideoCapture("C:\\Users\\tishc\\Desktop\\keyframes\\find_keyframes\\Darling.mp4")
 try:
 
     # creating a folder named data
-    if not os.path.exists('data1'):
-        os.makedirs('data1')
+    if not os.path.exists('data_dar'):
+        os.makedirs('data_dar')
 
     # if not created then raise error
 except OSError:
@@ -44,7 +44,7 @@ while (True):
     if ret:
         # if video is still left continue creating images
         print('#-------------------------------------#')
-        name_curr = './data1/frame' + str(currentframe) + '.jpg'
+        name_curr = './data_dar/frame' + str(currentframe) + '.jpg'
         print('Creating...' + name_curr)
 
         # writing the extracted images
@@ -65,7 +65,7 @@ while (True):
         print (currentframe_configs)
         if currentframe >= 1:
             prevframe = currentframe - 1
-            name_prev = './data1/frame' + str(prevframe) + '.jpg'
+            name_prev = './data_dar/frame' + str(prevframe) + '.jpg'
             aver_Hash_prev = imagehash.average_hash(Image.open(name_prev))
             # start to put previous hashes in a list
             print('configs for previous frame' + name_prev)
